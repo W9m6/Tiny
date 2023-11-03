@@ -66,6 +66,7 @@ void Ctiny2Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO2, m_ComboBox2);
 	DDX_Control(pDX, IDC_PROGRESS1, m_Progress);
 
+	DDX_Control(pDX, IDC_SLIDER1, m_SliderCtrl);
 }
 
 BEGIN_MESSAGE_MAP(Ctiny2Dlg, CDialogEx)
@@ -77,6 +78,7 @@ BEGIN_MESSAGE_MAP(Ctiny2Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &Ctiny2Dlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON4, &Ctiny2Dlg::OnBnClickedButton4)
 	ON_WM_TIMER()
+	ON_WM_HSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -128,6 +130,9 @@ BOOL Ctiny2Dlg::OnInitDialog()
 	SetTimer(1, 1000, NULL);
 
 	// 初始化滑动条
+	m_SliderCtrl.SetRange(1, 100); //设置滑动范围
+	m_SliderCtrl.SetTicFreq(1); //每10个单位画一刻度
+	m_SliderCtrl.SetLineSize(1);
 
 
 
@@ -342,11 +347,23 @@ void Ctiny2Dlg::OnBnClickedButton4()
 
 void Ctiny2Dlg::OnTimer(UINT_PTR nIDEvent)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	// 时钟事件，定时更新进度条
 
 	pos = pos + 50;
 	if (pos > 500)
 		pos = 0;
 	m_Progress.SetPos(pos);
 
+}
+
+
+void Ctiny2Dlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	// 动态读取滑动条
+	int i = m_SliderCtrl.GetPos();;    // 获取当前刻度
+	CString pos;
+	pos.Format(_T("%d"), i);		// 强转成CString类型
+	CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT9);
+	pEditBox->SetWindowText(pos);
+	
 }

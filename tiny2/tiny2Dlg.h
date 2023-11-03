@@ -42,4 +42,6 @@ public:
 	CProgressCtrl m_Progress;
 	
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	CSliderCtrl m_SliderCtrl;
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
