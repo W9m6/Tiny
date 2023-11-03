@@ -71,6 +71,7 @@ BEGIN_MESSAGE_MAP(Ctiny2Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &Ctiny2Dlg::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON1, &Ctiny2Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &Ctiny2Dlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON4, &Ctiny2Dlg::OnBnClickedButton4)
 END_MESSAGE_MAP()
 
 
@@ -164,7 +165,73 @@ HCURSOR Ctiny2Dlg::OnQueryDragIcon()
 void Ctiny2Dlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	
+	CFileDialog dlg(true, ".txt", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("文本文件(*.txt)|*.txt|所有文件 (*.*)|*.*||"));
+	CString filePath;
+	CStdioFile File;
+	CString strLine;
+	CString LStr, RStr;
+
+	// 获取用户选择的文件路径
+	if (dlg.DoModal() == IDOK)
+	{
+		filePath = dlg.GetPathName();
+		UpdateData(FALSE);
+	}
+
+
+	// 将读到的文件信息输入到信息框
+	File.Open(filePath, CFile::modeRead | CFile::typeText);
+
+
+	while (File.ReadString(strLine))
+	{
+		int index = strLine.Find(':');
+		LStr = strLine.Left(index);
+		RStr = strLine.Mid(index + 1);
+		if (LStr == "姓名")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT1);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "学号")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT2);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "IP地址")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT3);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "物理地址")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT4);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "子网掩码")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT5);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "籍贯")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT6);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "政治面貌")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT7);
+			pEditBox->SetWindowText(RStr);
+		}
+		else if (LStr == "联系方式")
+		{
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT8);
+			pEditBox->SetWindowText(RStr);
+		}
+
+
+	}
+	File.Close();
 
 }
 
@@ -186,4 +253,65 @@ void Ctiny2Dlg::OnBnClickedButton2()
 	CTestDialog2* pDlg = new CTestDialog2;
 	pDlg->Create(IDD_DIALOG2, this);
 	pDlg->ShowWindow(SW_SHOW);
+}
+
+
+void Ctiny2Dlg::OnBnClickedButton4()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	// TODO: 在此添加控件通知处理程序代码
+	CFileDialog dlg(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("文本文件(*.txt)|*.txt|所有文件(*.*)|*.*||"));
+	CString filePath;
+	CStdioFile File;
+
+
+
+	// 获取用户选择的文件路径
+	if (dlg.DoModal() == IDOK)
+	{
+		filePath = dlg.GetPathName();
+		if (File.Open(filePath, CFile::modeCreate | CFile::modeWrite | CFile::typeText))
+		{
+			//循环写入文件，读取静态文本框描述文字和编辑框文字，将他们写入到文件中
+			int staticID = IDC_STATIC1;
+			for (int editID = IDC_EDIT1; editID <= IDC_EDIT8; editID++)
+			{
+
+				CEdit* pEditBox = (CEdit*)GetDlgItem(editID);
+				CStatic* pStatic = (CStatic*)GetDlgItem(staticID);
+				CString strText, strValue;
+				pStatic->GetWindowText(strText);
+				pEditBox->GetWindowText(strValue);
+				File.WriteString(strText + ":" + strValue + "\n");
+				staticID++;
+			}
+
+			//获取单选的框并写入文件 
+			CButton* pRadioButton = (CButton*)GetDlgItem(IDC_RADIO1);
+			int buttonState = pRadioButton->GetCheck();
+
+			if (buttonState == BST_CHECKED) {
+				File.WriteString("性别:男\n");
+			}
+			pRadioButton = (CButton*)GetDlgItem(IDC_RADIO2);
+			buttonState = pRadioButton->GetCheck();
+			if (buttonState == BST_CHECKED) {
+				File.WriteString("性别:女\n");
+			}
+
+			//// 获取下拉列表的值并写入文件
+			//CString grade, major;
+			//int i;
+			//i = m_ComboBox1.GetCurSel();   //取得当前的位置
+			//m_ComboBox1.GetLBText(i, grade);//取得当前的字符串
+			//i = m_ComboBox2.GetCurSel();
+			//m_ComboBox2.GetLBText(i, major);
+			//File.WriteString("年级:" + grade + "\n");
+			//File.WriteString("专业:" + major + "\n");
+
+			File.Close();
+		}
+
+	}
+
 }
