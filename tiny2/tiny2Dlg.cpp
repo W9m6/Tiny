@@ -309,15 +309,15 @@ void Ctiny2Dlg::OnBnClickedButton4()
 				File.WriteString("性别:女\n");
 			}
 
-			//// 获取下拉列表的值并写入文件
-			//CString grade, major;
-			//int i;
-			//i = m_ComboBox1.GetCurSel();   //取得当前的位置
-			//m_ComboBox1.GetLBText(i, grade);//取得当前的字符串
-			//i = m_ComboBox2.GetCurSel();
-			//m_ComboBox2.GetLBText(i, major);
-			//File.WriteString("年级:" + grade + "\n");
-			//File.WriteString("专业:" + major + "\n");
+			// 获取下拉列表的值并写入文件
+			CString grade, major;
+			int i;
+			i = m_ComboBox1.GetCurSel();   //取得当前的位置
+			m_ComboBox1.GetLBText(i, grade);//取得当前的字符串
+			i = m_ComboBox2.GetCurSel();
+			m_ComboBox2.GetLBText(i, major);
+			File.WriteString("年级:" + grade + "\n");
+			File.WriteString("专业:" + major + "\n");
 
 			File.Close();
 		}
