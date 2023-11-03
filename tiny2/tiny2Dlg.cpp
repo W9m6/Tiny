@@ -117,13 +117,13 @@ BOOL Ctiny2Dlg::OnInitDialog()
 	// TODO: 在此添加额外的初始化代码
 
 	// 为下拉框添加下来元素
-	m_ComboBox1.AddString("2020级");
-	m_ComboBox1.AddString("2021级");
-	m_ComboBox1.AddString("2022级");
-	m_ComboBox1.AddString("2023级");
-	m_ComboBox2.AddString("计算机科学与技术");
-	m_ComboBox2.AddString("软件工程");
-	m_ComboBox2.AddString("信息安全");
+	m_ComboBox1.AddString(L"2020级");
+	m_ComboBox1.AddString(L"2021级");
+	m_ComboBox1.AddString(L"2022级");
+	m_ComboBox1.AddString(L"2023级");
+	m_ComboBox2.AddString(L"计算机科学与技术");
+	m_ComboBox2.AddString(L"软件工程");
+	m_ComboBox2.AddString(L"信息安全");
 
 	// 设置进度条范围和初始化时钟时事件
 	m_Progress.SetRange(0, 500);
@@ -180,7 +180,7 @@ void Ctiny2Dlg::OnPaint()
 	{
 		CImage* m_sLogInPic;//新建一个CImage的对象 用于储存图片
 		m_sLogInPic = new CImage;
-		m_sLogInPic->Load("./res/AHU.bmp");//使用m_sLogInPic读取图片引号中添加图片地址及图片名
+		m_sLogInPic->Load(L"./res/AHU.bmp");//使用m_sLogInPic读取图片引号中添加图片地址及图片名
 		CPaintDC dc(this); // 建立一个矩形在矩形中画图
 		CRect rect;
 		GetDlgItem(IDC_STATIC333)->GetWindowRect(&rect);//规定矩形为你所创建的图片控件（括号内为控件ID）若是为整个窗口添加背景将矩形设为整个窗口即可
@@ -204,7 +204,7 @@ HCURSOR Ctiny2Dlg::OnQueryDragIcon()
 void Ctiny2Dlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CFileDialog dlg(TRUE, _T(".txt"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "文本文件(*.txt)|*.txt|所有文件 (*.*)|*.*||");
+	CFileDialog dlg(TRUE, _T(".txt"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("文本文件(*.txt)|*.txt|所有文件 (*.*)|*.*||"));
 	CString filePath;
 	CStdioFile File;
 	CString strLine;
@@ -328,12 +328,12 @@ void Ctiny2Dlg::OnBnClickedButton4()
 			int buttonState = pRadioButton->GetCheck();
 
 			if (buttonState == BST_CHECKED) {
-				File.WriteString("性别:男\n");
+				File.WriteString(L"性别:男\n");
 			}
 			pRadioButton = (CButton*)GetDlgItem(IDC_RADIO2);
 			buttonState = pRadioButton->GetCheck();
 			if (buttonState == BST_CHECKED) {
-				File.WriteString("性别:女\n");
+				File.WriteString(L"性别:女\n");
 			}
 
 			// 获取下拉列表的值并写入文件
@@ -343,15 +343,15 @@ void Ctiny2Dlg::OnBnClickedButton4()
 			m_ComboBox1.GetLBText(i, grade);//取得当前的字符串
 			i = m_ComboBox2.GetCurSel();
 			m_ComboBox2.GetLBText(i, major);
-			File.WriteString("年级:" + grade + "\n");
-			File.WriteString("专业:" + major + "\n");
+			File.WriteString(L"年级:" + grade + "\n");
+			File.WriteString(L"专业:" + major + "\n");
 
 
 			//年龄
 			CString age;
 			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT9);
 			pEditBox->GetWindowText(age);
-			File.WriteString("年龄:" + age + "\n");
+			File.WriteString(L"年龄:" + age + "\n");
 			File.Close();
 		}
 
