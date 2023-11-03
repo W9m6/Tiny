@@ -7,6 +7,8 @@
 #include "tiny2.h"
 #include "tiny2Dlg.h"
 #include "afxdialogex.h"
+#include "CTestDialog1.h"
+#include "CTestDialog2.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -59,12 +61,16 @@ Ctiny2Dlg::Ctiny2Dlg(CWnd* pParent /*=nullptr*/)
 void Ctiny2Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+
 }
 
 BEGIN_MESSAGE_MAP(Ctiny2Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDC_BUTTON3, &Ctiny2Dlg::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON1, &Ctiny2Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &Ctiny2Dlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +159,31 @@ HCURSOR Ctiny2Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void Ctiny2Dlg::OnBnClickedButton3()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	
+
+}
+
+
+void Ctiny2Dlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	// 创建模态对话框
+	CTestDialog1 td;
+	td.DoModal();
+	GetDlgItem(IDC_BUTTON1)->EnableWindow(FALSE);
+}
+
+
+void Ctiny2Dlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	// 创建非模态对话框
+	CTestDialog2* pDlg = new CTestDialog2;
+	pDlg->Create(IDD_DIALOG2, this);
+	pDlg->ShowWindow(SW_SHOW);
+}
