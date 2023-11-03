@@ -211,6 +211,7 @@
     <None Include="res\tiny2.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\AHU.bmp" />
     <Image Include="res\tiny2.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

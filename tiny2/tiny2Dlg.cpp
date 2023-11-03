@@ -9,6 +9,7 @@
 #include "afxdialogex.h"
 #include "CTestDialog1.h"
 #include "CTestDialog2.h"
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -177,7 +178,17 @@ void Ctiny2Dlg::OnPaint()
 	}
 	else
 	{
+		CImage* m_sLogInPic;//新建一个CImage的对象 用于储存图片
+		m_sLogInPic = new CImage;
+		m_sLogInPic->Load("./res/AHU.bmp");//使用m_sLogInPic读取图片引号中添加图片地址及图片名
+		CPaintDC dc(this); // 建立一个矩形在矩形中画图
+		CRect rect;
+		GetDlgItem(IDC_STATIC333)->GetWindowRect(&rect);//规定矩形为你所创建的图片控件（括号内为控件ID）若是为整个窗口添加背景将矩形设为整个窗口即可
+		ScreenToClient(&rect);
+		dc.SetStretchBltMode(HALFTONE);
+		m_sLogInPic->Draw(dc.m_hDC, rect);//通过画图 将图片paint出来 
 		CDialogEx::OnPaint();
+
 	}
 }
 
@@ -193,7 +204,7 @@ HCURSOR Ctiny2Dlg::OnQueryDragIcon()
 void Ctiny2Dlg::OnBnClickedButton3()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CFileDialog dlg(true, ".txt", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, _T("文本文件(*.txt)|*.txt|所有文件 (*.*)|*.*||"));
+	CFileDialog dlg(TRUE, _T(".txt"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, "文本文件(*.txt)|*.txt|所有文件 (*.*)|*.*||");
 	CString filePath;
 	CStdioFile File;
 	CString strLine;
@@ -286,9 +297,7 @@ void Ctiny2Dlg::OnBnClickedButton2()
 
 void Ctiny2Dlg::OnBnClickedButton4()
 {
-	// TODO: 在此添加控件通知处理程序代码
-	// TODO: 在此添加控件通知处理程序代码
-	CFileDialog dlg(FALSE, NULL, NULL, OFN_OVERWRITEPROMPT, _T("文本文件(*.txt)|*.txt|所有文件(*.*)|*.*||"));
+	CFileDialog dlg(FALSE, _T(".txt"), NULL, OFN_OVERWRITEPROMPT, _T("文本文件(*.txt)|*.txt|所有文件(*.*)|*.*||"));
 	CString filePath;
 	CStdioFile File;
 
@@ -337,6 +346,12 @@ void Ctiny2Dlg::OnBnClickedButton4()
 			File.WriteString("年级:" + grade + "\n");
 			File.WriteString("专业:" + major + "\n");
 
+
+			//年龄
+			CString age;
+			CEdit* pEditBox = (CEdit*)GetDlgItem(IDC_EDIT9);
+			pEditBox->GetWindowText(age);
+			File.WriteString("年龄:" + age + "\n");
 			File.Close();
 		}
 
