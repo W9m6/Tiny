@@ -36,4 +36,6 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton4();
+	CComboBox m_ComboBox1;
+	CComboBox m_ComboBox2;
 };
