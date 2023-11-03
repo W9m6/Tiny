@@ -64,6 +64,8 @@ void Ctiny2Dlg::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Control(pDX, IDC_COMBO1, m_ComboBox1);
 	DDX_Control(pDX, IDC_COMBO2, m_ComboBox2);
+	DDX_Control(pDX, IDC_PROGRESS1, m_Progress);
+
 }
 
 BEGIN_MESSAGE_MAP(Ctiny2Dlg, CDialogEx)
@@ -74,6 +76,7 @@ BEGIN_MESSAGE_MAP(Ctiny2Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &Ctiny2Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &Ctiny2Dlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON4, &Ctiny2Dlg::OnBnClickedButton4)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -109,6 +112,7 @@ BOOL Ctiny2Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+
 	// 为下拉框添加下来元素
 	m_ComboBox1.AddString("2020级");
 	m_ComboBox1.AddString("2021级");
@@ -117,6 +121,15 @@ BOOL Ctiny2Dlg::OnInitDialog()
 	m_ComboBox2.AddString("计算机科学与技术");
 	m_ComboBox2.AddString("软件工程");
 	m_ComboBox2.AddString("信息安全");
+
+	// 设置进度条范围和初始化时钟时事件
+	m_Progress.SetRange(0, 500);
+	m_Progress.SetPos(0);
+	SetTimer(1, 1000, NULL);
+
+	// 初始化滑动条
+
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -323,5 +336,17 @@ void Ctiny2Dlg::OnBnClickedButton4()
 		}
 
 	}
+
+}
+
+
+void Ctiny2Dlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	pos = pos + 50;
+	if (pos > 500)
+		pos = 0;
+	m_Progress.SetPos(pos);
 
 }

@@ -32,10 +32,14 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 public:
+	int pos = 0;   // 设置进度条当前进度
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton4();
 	CComboBox m_ComboBox1;
 	CComboBox m_ComboBox2;
+	CProgressCtrl m_Progress;
+	
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
